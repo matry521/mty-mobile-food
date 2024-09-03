@@ -1,0 +1,15 @@
+09:52:35:411[ERROR] [||] 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+A component required a bean of type 'com.mty.food.truck.converter.MobileFoodConverter' that could not be found.
+
+
+Action:
+
+Consider defining a bean of type 'com.mty.food.truck.converter.MobileFoodConverter' in your configuration.
+ 

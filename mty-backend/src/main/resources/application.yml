@@ -1,0 +1,78 @@
+server:
+  port: 8099
+
+spring:
+  application:
+    name: mobile-food-service
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mobile-food?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 初始化大小，最小，最大
+    druid:
+      initial-size: 5
+      min-idle: 5
+      maxActive: 20
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      stat-view-servlet:
+        allow: true
+      web-stat-filter:
+        enabled: true
+        url-pattern: /druid/*
+
+mybatis-plus:
+  mapper-locations: classpath:/com/mty/food/truck/**/xml/*Mapper.xml
+  global-config.banner: false  # 关闭MP3.0自带的banner
+  # 主键类型  0:"数据库ID自增",1:"该类型为未设置主键类型", 2:"用户输入ID",3:"全局唯一ID (数字类型唯一ID)", 4:"全局唯一ID UUID",5:"字符串全局唯一ID (idWorker 的字符串表示)";
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+  # 返回类型为Map,显示null对应的字段
+  configuration:
+    call-setters-on-nulls: true
+  # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# springdoc-openapi项目访问访问地址: http://127.0.0.1:8099/doc.html
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    # path: 配置swagger-ui.html/UI界面的访问路径,默认为/swagger-ui.html
+    tags-sorter: alpha
+    # tags-sorter: 接口文档中的tags排序规则,默认为alpha,可选值为alpha(按字母顺序排序)或as-is(按照在代码中定义的顺序排序)
+    operations-sorter: alpha
+
+  api-docs:
+    path: /v3/api-docs
+    # path: 配置api-docs的访问路径,默认为/v3/api-docs
+
+  group-configs:
+    # group-configs: 配置分组信息
+    - group: 'default'
+      # group: 分组名称
+      paths-to-match: '/**' #配置要匹配的路径,默认为/**
+      packages-to-scan: com.mty.food.truck.controller #配置要扫描的包的路径,直接配置为Controller类所在的包名即可
+
+# knife4j项目访问访问地址:http://127.0.0.1:8099/doc.html#/home
+knife4j:
+  enable: true # 设置为true以启用Knife4j增强功能,这将再应用程序中启用Knife4j UI
+  setting:
+    language: zh_cn   # 设置Knife4j UI的语言,默认为zh_cn,可选值为zh_cn或en
+  #开启生产环境屏蔽
+  production: false
+  #是否启用登录认证
+  basic:
+    enable: false
+    username: # 自己设置一个
+    password: # 自己设置一个
+
